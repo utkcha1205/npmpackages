@@ -1,6 +1,6 @@
 {
   "name": "debounce-hook-react",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "hook for debouncing input value",
   "main": "index.js",
   "scripts": {

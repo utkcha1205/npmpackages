@@ -1,168 +1,76 @@
-Your State Management Package Name
-npm version
+# debounce-hook-react
 
-A powerful state management solution for React applications.
+**debounce-hook-react is a custom React hook that provides debouncing functionality for handling input changes that should trigger a certain action after a short delay. It helps in preventing excessive function calls when dealing with fast-changing inputs like search bars or auto-suggestions.**
 
-Table of Contents
-Installation
-Getting Started
-API Reference
-Usage Examples
-Troubleshooting
-Contributing
-Changelog
-License
-Installation
-You can install the package via npm or yarn:
+**Installation**
 
-shell
-Copy code
-npm install your-package-name
-or
+**You can install the debounce-hook-react package using npm or yarn:**
 
-shell
-Copy code
-yarn add your-package-name
-Getting Started
-To start using your state management package, follow these steps:
+bash
+```JSX
+npm install debounce-hook-react # or yarn add debounce-hook-react
 
-Import the package in your React component:
-jsx
-Copy code
-import { StateProvider, useStateValue } from 'your-package-name';
-Wrap your root component with the StateProvider:
-jsx
-Copy code
-function App() {
-return (
-<StateProvider initialState={initialState} reducer={reducer}>
-{/_ Your app components _/}
-</StateProvider>
-);
-}
-Access the state and dispatch functions in your components:
-jsx
-Copy code
-function MyComponent() {
-const [{ count }, dispatch] = useStateValue();
+```
 
-const increment = () => {
-dispatch({ type: 'INCREMENT' });
-};
+**Usage**
 
-return (
-<div>
-<p>Count: {count}</p>
-<button onClick={increment}>Increment</button>
-</div>
-);
-}
-API Reference
-StateProvider
-A higher-order component (HOC) that provides the state and dispatch functions to the components.
+**Here's how you can use the useDebounce hook in your React components:**
 
-Props:
+```JSX
 
-initialState: The initial state object.
-reducer: A function that specifies how the state should be updated based on actions.
-Example:
+import React from 'react'; import useDebounce from 'debounce-hook-react'; 
+function MyComponent() { 
+    const [searchTerm, setSearchTerm] = React.useState(''); 
+    const [debouncedSearchTerm] = useDebounce(searchTerm, 500); 
+// Your logic for handling debouncedSearchTerm // ... 
+    return ( 
+        <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search..." /> 
+        ); 
+    } 
+export default MyComponent;
 
-jsx
-Copy code
-<StateProvider initialState={initialState} reducer={reducer}>
-{/_ Your app components _/}
-</StateProvider>
-useStateValue
-A custom hook that returns the current state and dispatch function.
+```
 
-Example:
+**In the above example, the useDebounce hook is used to debounce the searchTerm state variable. The debouncedSearchTerm will have a delay of 500 milliseconds before reflecting the changes made to searchTerm.**
 
-jsx
-Copy code
-const [{ count }, dispatch] = useStateValue();
-reducer
-A reducer function that handles state updates based on actions.
+**API**
 
-Example:
+**The useDebounce hook accepts two arguments:**
 
-jsx
-Copy code
-function reducer(state, action) {
-switch (action.type) {
-case 'INCREMENT':
-return { ...state, count: state.count + 1 };
-// Handle other actions...
-default:
-return state;
-}
-}
-Usage Examples
-Example 1: Counter
-jsx
-Copy code
-function Counter() {
-const [{ count }, dispatch] = useStateValue();
+- value: The input value that needs to be debounced.
+- delay: The time in milliseconds to delay the update of the debounced value.
 
-const increment = () => {
-dispatch({ type: 'INCREMENT' });
-};
+**It returns an array with two elements:**
 
-const decrement = () => {
-dispatch({ type: 'DECREMENT' });
-};
+- debouncedValue: The debounced value that reflects the latest value after the specified delay.
+- cancelDebounce: A function to cancel the debounce and reset the debounced value.
 
-return (
-<div>
-<p>Count: {count}</p>
-<button onClick={increment}>Increment</button>
-<button onClick={decrement}>Decrement</button>
-</div>
-);
-}
-Example 2: Todo List
-jsx
-Copy code
-function TodoList() {
-const [{ todos }, dispatch] = useStateValue();
+**Example**
 
-const addTodo = (text) => {
-dispatch({ type: 'ADD_TODO', payload: { text } });
-};
+```JSX
 
-const deleteTodo = (id) => {
-dispatch({ type: 'DELETE_TODO', payload: { id } });
-};
+import React from 'react'; import useDebounce from 'debounce-hook-react'; 
 
-return (
-<div>
-<ul>
-{todos.map((todo) => (
-<li key={todo.id}>
-{todo.text}
-<button onClick={() => deleteTodo(todo.id)}>Delete</button>
-</li>
-))}
-</ul>
-<input type="text" onChange={(e) => addTodo(e.target.value)} />
-</div>
-);
-}
-Troubleshooting
-Q: Why am I not seeing the updated state in my component?
-Make sure you have wrapped your component with the StateProvider and accessed the state using the useStateValue hook. Check that your reducer is correctly updating the state and dispatching the actions.
+function MyComponent() { 
+    const [count, setCount] = React.useState(0); 
+    const [debouncedCount, cancelDebounce] = useDebounce(count, 1000); 
+    React.useEffect(() => { console.log('Debounced count:', debouncedCount); 
 
-Q: How can I handle asynchronous actions?
-You can use a middleware library like Redux Thunk or Redux Saga to handle asynchronous actions. Refer to their documentation for integration with your state management package.
+    return () => { 
+        // Cancel the debounce when component unmounts cancelDebounce(); }; }, [debouncedCount]); 
+        return ( 
+            <div> 
+                <button onClick={() => setCount((prev) => prev + 1)}>Increment</button> 
+                <p>Count: {count}</p> <p>Debounced Count: {debouncedCount}</p> 
+            </div> 
+            ); 
+        } 
+export default MyComponent;
 
-Contributing
-Contributions are welcome! Please read the CONTRIBUTING.md file for guidelines.
+```
+**License**
 
-Changelog
-See the CHANGELOG.md file for version history and changes.
+**This package is licensed under the MIT License - see the [LICENSE](https://chat.openai.com/LICENSE) file for details.**
 
-License
-This project is licensed under the MIT License.
+**Thank you for using debounce-hook-react. If you have any issues, suggestions, or contributions, feel free to open an issue or a pull request on the [GitHub repository](https://github.com/yourusername/your-repo). Happy coding!**
 
-Feel free to customize and expand upon this template to fit the specific details and features of your state management npm package for React. Remember to include any additional information, usage examples, and troubleshooting tips that are relevant to your package.
-
-I hope this example helps you in creating the documentation for your package. If you have any further questions, feel free to ask!
