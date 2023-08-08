@@ -72,5 +72,5 @@ export default MyComponent;
 
 **This package is licensed under the MIT License - see the [LICENSE](https://chat.openai.com/LICENSE) file for details.**
 
-**Thank you for using debounce-hook-react. If you have any issues, suggestions, or contributions, feel free to open an issue or a pull request on the [GitHub repository](https://github.com/yourusername/your-repo). Happy coding!**
+**Thank you for using debounce-hook-react. If you have any issues, suggestions, or contributions, feel free to open an issue or a pull request on the [GitHub repository](https://github.com/utkcha1205/npmpackages/tree/main/useDebounce). Happy coding!**
 
